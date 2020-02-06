@@ -97,9 +97,11 @@ export default class extends Vue {
       icon => icon.sizes.includes("512") || icon.sizes.includes("192")
     );
 
+    const formattedIconSrc = new URL(goodIcon.src, this.siteHref).href;
+
     const packageid = generatePackageId((this.manifest.short_name as string) || (this.manifest.name as string));
 
-    let startURL = (this.manifest.start_url as string).replace(`https://${new URL(this.siteHref).hostname}`, "")
+    let startURL = (this.manifest.start_url as string).replace(`https://${new URL(this.siteHref).hostname}`, "");
 
 
     const body = JSON.stringify({
@@ -112,8 +114,8 @@ export default class extends Vue {
       backgroundColor:
         this.manifest.background_color || this.manifest.theme_color,
       startUrl: startURL,
-      iconUrl: goodIcon.src,
-      maskableIconUrl: goodIcon.src,
+      iconUrl: formattedIconSrc,
+      maskableIconUrl: formattedIconSrc,
       appVersion: "1.0.0",
       useBrowserOnChromeOS: true,
       splashScreenFadeOutDuration: 300,
